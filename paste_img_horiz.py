@@ -7,10 +7,8 @@ number_of_images = int(dialogs.input_alert("# of images?"))
 
 assert 1 <= number_of_images <=36
 
-i = 0
-while i < number_of_images:
+for i in range(number_of_images):
     images.append(photos.pick_image())
-    i += 1
 
 widths, heights = zip(*(j.size for j in images))
 
