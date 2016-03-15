@@ -12,7 +12,7 @@ if im is None:
     console.hud_alert("No image chosen", "error", 1.0)
     sys.exit(0)
 else:
-    assert repr(type(im))[8:-2] in ("PIL.JpegImagePlugin.JpegImageFile", )
+    assert str(type(im))[8:-2][4:].partition("ImagePlugin")[0] in ("Bmp", "Gif", "Jpeg", "Png", "Ppm", "Tiff")
     
     width, height = im.size
     percentage = int(console.input_alert("Resize image to _%", "Enter number"))
