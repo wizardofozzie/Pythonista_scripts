@@ -6,6 +6,7 @@ GitHub Repos
 | Script Name                         | Description   | 
 | ----------------------------------- | ------------- | 
 | [comment_code][woo]                 | Comment/uncommon selected code in editor |
+| [convert_pyui_json][woo]            | Convert pyui to json and vice versa |
 | [dl][woo]                           | Download GitHub (or PyPi) repo simply |
 | [gamefaqs_dl][woo]                  | Download a printable GameFAQs.com FAQ |
 | [img_paste_horiz][woo]              | Paste `x` photos horizontally into a new image |
