@@ -9,6 +9,7 @@ GitHub Repos
 | [convert_pyui_json][woo]            | Convert pyui to json and vice versa |
 | [dl][woo]                           | Download GitHub (or PyPi) repo simply |
 | [gamefaqs_dl][woo]                  | Download a printable GameFAQs.com FAQ |
+| [get_img_index][woo]                | Get image's index from file name |
 | [img_paste_horiz][woo]              | Paste `x` photos horizontally into a new image |
 | [img_resize][woo]                   | Resize an image (fixed ratio) |
 | [img_rotate][woo]                   | Rotate an image |
