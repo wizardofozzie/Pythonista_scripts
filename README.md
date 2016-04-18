@@ -12,6 +12,7 @@ GitHub Repos
 | [img_paste_horiz][woo]              | Paste `x` photos horizontally into a new image |
 | [img_resize][woo]                   | Resize an image (fixed ratio) |
 | [img_rotate][woo]                   | Rotate an image |
+| [launch_startup][woo]               | pythonista_startup for [pybitcointools][pybtc] |
 | [qrread][woo]                       | Read a QR Code's data |
 | [save_to_pythonista][woo]           | Import external application's file into Pythonista |
 | [telnet_starwars][woo]              | Play ASCII animation of Star Wars |
@@ -20,3 +21,4 @@ GitHub Repos
 
 
 [woo]: https://github.com/wizardofozzie
+[pybtc]: https://github.com/wizardofozzie/pybitcointools
