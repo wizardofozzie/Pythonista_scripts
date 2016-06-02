@@ -1,4 +1,6 @@
 # coding: utf-8
+# from @omz https://gist.github.com/omz/66a763a9db15dc847690
+
 from objc_util import * 
 import threading
 
