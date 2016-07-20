@@ -15,11 +15,34 @@ PYBTC = os.path.join(HOME2, "pybitcointools-master") # os.path.expanduser("~/Doc
 # PYBTC_source = os.path.expanduser("~/Documents/pybitcointools-master/bitcoin")
 # PYBTC_dest = os.path.expanduser("~/Documents/site-packages/bitcoin")
 
-
+#from pythonista_startup 
 sys.path.insert(0, PYBTC)
 
+# try:
+#     from bitcoin import *
+#     console.hud_alert("pybitcointools successfully imported!".title(), "success", 1.42)
+# except ImportError:
+#     console.hud_alert("Unable to import... pybitcointools".title(), "error", 1.42)
+
+def to_bytes(x):
+    if sys.version_info.major > 2 and isinstance(x, str):
+        x = bytes(x, 'utf-8')
+    return x
+
+s2b = str2bytes = to_bytes
+
+
+def from_bytes(x):
+    if sys.version_info.major > 2 and isinstance(x, bytes):
+        x = str(x, 'utf-8')
+    return x
+
+b2s = bytes2str = from_bytes
+
 try:
-    from bitcoin import *
-    console.hud_alert("pybitcointools successfully imported!".title(), "success", 1.42)
+    import cd_ls_pwd     # import the three functions
+    cd = cd_ls_pwd.cd    # send up a top-level alias
+    ls = cd_ls_pwd.ls    # send up a top-level alias
+    pwd = cd_ls_pwd.pwd  # send up a top-level alias
 except ImportError:
-    console.hud_alert("Unable to import... pybitcointools".title(), "error", 1.42)
+    pass
