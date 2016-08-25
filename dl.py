@@ -1,10 +1,11 @@
 ## Downloadista, modified so that github_download() accepts:
-##  * clipboard GitHub URL 
-##  * GitHub URL 
+##  * clipboard GitHub URL
+##  * GitHub URL
 ##  * "user/repo"
 
 
-import urllib
+from __future__ import absolute_import
+from __future__ import print_function
 import zipfile
 import tarfile
 import shutil
@@ -14,10 +15,15 @@ import clipboard
 
 from os import path
 
+try:
+    from urllib.request import urlretrieve
+except:
+    from urllib import urlretrieve
+
 DOCUMENTS = os.path.expanduser("~/Documents")
 
 REGEX_GITHUB_URL = re.compile(r'''^http(s?)://([\w-]*\.)?github\.com/(?P<user>[\w-]+)/(?P<repo>[\w-]*)((/tree|/blob)/(?P<branch>[\w-]*))?''')
-                 
+
 
 def extract_git_id(giturl):
     m = REGEX_GITHUB_URL.match(giturl)
@@ -34,7 +40,7 @@ def is_github_url(url):
     return bool(REGEX_GITHUB_URL.match(url))
 
 
-def _decode_github_url(url):    
+def _decode_github_url(url):
     if is_github_url(url):
         ret = extract_git_id(url)
         gd = ret.groupdict()
@@ -51,7 +57,7 @@ def github_download(*args):
         return github_download(clipboard.get())
     elif len(args) ==1 and is_github_url(args[0]):
         user, repo, branch = _decode_github_url(args[0])
-    elif (len(args) == 1 and re.match(ur'^[0-9a-zA-Z]*/[0-9a-zA-Z]*$', str(args[0]))):
+    elif (len(args) == 1 and re.match(r'^[0-9a-zA-Z]*/[0-9a-zA-Z]*$', str(args[0]))):
         user, repo = args[0].split("/", 1)
         branch = "master"
     elif len(args)==2:
@@ -61,41 +67,54 @@ def github_download(*args):
         user, repo, branch = args
     else: return
     branch = "master" if not branch else branch
-    
-    #_change_dir("Documents")
-    print 'Downloading {0}...'.format(repo)
+
+    _change_dir("Documents")
+    print(('Downloading {0}...'.format(repo)))
     base_url = 'https://github.com/{0}/{1}/archive/{2}.zip'
     url = base_url.format(user, repo, branch)
     zipname = '{0}.zip'.format(repo)
-    urllib.urlretrieve(url, zipname)
+    urlretrieve(url, zipname)
 
-    print 'Extracting...'
+    print('Extracting...')
     z = zipfile.ZipFile(zipname)
     z.extractall()
+    dst = os.path.join(DOCUMENTS, zipname[:-len(".zip")])
+    src = "{dir}-{branch}".format(dir=dst, branch=branch)
     os.remove(zipname)
-    print 'Done.'
+    try:
+        os.rename(src, dst)
+    except OSError:
+        os.rename(dst, "{}.BAK".format(dst))
+        os.rename(src, dst)
+    print('Done.')
 
     # If branch is a version tag the directory
     # is slightly different
-    if re.match('^v[0-9.]*$', branch):
-        dirname = repo + '-' + branch[1:]
-    else:
-        dirname = repo + '-' + branch
-    return dirname
+    #if re.match('^v[0-9.]*$', branch):
+    #    dirname = repo + '-' + branch[1:]
+    #else:
+    #    dirname = repo + '-' + branch
 
+    return os.path.basename(dst)
+
+
+gdl = github_download
 
 def pypi_download(package, version):
     _change_dir("Documents")
-    print 'Downloading {0}...'.format(package)
+    print(('Downloading {0}...'.format(package)))
     url = 'https://pypi.python.org/packages/source/{0}/{1}/{1}-{2}.tar.gz'.format(package[0], package, version)
     tarname = package + '.tar.gz'
-    urllib.urlretrieve(url, tarname)
+    urlretrieve(url, tarname)
 
-    print 'Extracting...'
+    print('Extracting...')
     t = tarfile.open(tarname)
     t.extractall()
     os.remove(tarname)
-    print 'Done.'
+    print('Done.')
 
     dirname = package + '-' + str(version)
     return dirname
+
+if __name__ == "__main__":
+    github_download()
