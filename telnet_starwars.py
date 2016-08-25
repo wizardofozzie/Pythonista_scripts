@@ -10,12 +10,12 @@ playing = False
 
 def button_pressed(sender):
     global playing
-        if sender.title == "Play":
-            sender.title = 'Pause'
-            playing = True
-        else:
-            sender.title = 'Play'
-            playing = False
+    if sender.title == "Play":
+        sender.title = 'Pause'
+        playing = True
+    else:
+        sender.title = 'Play'
+        playing = False
 
 
 tn = telnetlib.Telnet(HOST)
