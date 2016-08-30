@@ -9,7 +9,7 @@ from __future__ import print_function
 import zipfile
 import tarfile
 import shutil
-import os, sys
+import os, sys, io
 import re
 import clipboard
 
@@ -74,10 +74,11 @@ def github_download(*args):
     url = base_url.format(user, repo, branch)
     zipname = '{0}.zip'.format(repo)
     urlretrieve(url, zipname)
+    with zipfile.ZipFile(open(zipname, "rb")) as zip_file:
+        print('Extracting...')
+        print('\n'.join(name for name in zip_file.namelist()))
+        zip_file.extractall()
 
-    print('Extracting...')
-    z = zipfile.ZipFile(zipname)
-    z.extractall()
     dst = os.path.join(DOCUMENTS, zipname[:-len(".zip")])
     src = "{dir}-{branch}".format(dir=dst, branch=branch)
     os.remove(zipname)
