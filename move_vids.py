@@ -5,7 +5,7 @@ from pprint import pprint as pp
 import os.path as path
 
 VIDEO_EXTENSIONS = [ 
-    ".mp4", ".m4a"
+    ".mp4", ".m4a", ".webm"
     ]
 
 
