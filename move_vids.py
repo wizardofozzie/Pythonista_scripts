@@ -12,16 +12,17 @@ def get_vid_names(dir="~/Documents", fullpath=True):
     assert path.isdir(path.expanduser(dir))
     filez = [f for f in os.listdir(path.expanduser(dir)) if path.isfile(f)]
     ret = [x for x in filez if path.splitext(x)[-1] in VIDEO_EXTENSIONS]
-    return ret if not fullpath else map(lambda x: path.join(path.expanduser(dir), x), ret)
+    return ret if not fullpath else map(lambda x: path.join(path.expanduser(dir), x)[8:], ret)
 
 
+# TODO: fix exception
 def move_vids(fromdir='~/Documents', todir='~/Documents/VIDEO'):
     vidlist = get_vid_names(fromdir, True)
     for f in vidlist:
         try:
-            shutil.move(
+            os.rename(
                 path.join(path.expanduser(fromdir), f), 
-                path.join(path.expanduser(todir), f)
+                path.expanduser(todir)
                 )
         except:
             print("Could not move file:\t {fn}".format(fn=f))
