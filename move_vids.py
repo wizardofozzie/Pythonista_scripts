@@ -1,7 +1,6 @@
 ## Move video files downloaded with youtube-dl from Documents => Documents/VIDEO
 
-import os, sys, shutil
-from pprint import pprint as pp
+import os
 import os.path as path
 
 VIDEO_EXTENSIONS = [ 
@@ -17,6 +16,7 @@ def get_vid_names(dir="~/Documents", fullpath=False):
 
 
 def move_vids(fromdir='~/Documents', todir='~/Documents/VIDEO'):
+    os.chdir(path.expanduser(fromdir))
     vidlist = get_vid_names(fromdir)
     for f in vidlist:
         try:
